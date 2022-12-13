@@ -118,6 +118,11 @@ right: var(--logical-polyfill-2-ltr, var(--inset-inline-start));
 /* In LTR, it takes the first value, in RTL, it takes the second value */
 ```
 
+Now, although the `left` and `right` properties that were generated from the `inset-inline-start`
+property have no effect, (Since there are more `left` and `right` properties generated from `inset-inline-end`)
+the `--inset-inline-start` variable is used as the fallback value for either `left` or `right`, whichever property
+should not currently have a size based on the direction.
+
 ### Additional Utility CSS variables available:
 
 In addition to the CSS variables generated for `inset-inline-(start|end)` properties,

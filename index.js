@@ -587,6 +587,17 @@ module.exports = () => {
           rule
         );
       },
+      direction: (decl) => {
+        const value = decl.value;
+        /** @type {require("postcss").Rule} */
+        const rule = decl.parent;
+        if (value === "ltr") {
+          ltrSelectors.push(rule.selector);
+        }
+        if (value === "rtl") {
+          rtlSelectors.push(rule.selector);
+        }
+      },
     },
   };
 };

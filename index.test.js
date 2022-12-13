@@ -739,3 +739,57 @@ describe("inset-inline", () => {
     );
   });
 });
+
+describe("Works with `direction` CSS property", () => {
+  it("Polyfills inset-inline-end", async () => {
+    await run(
+      `
+        .foo {
+          inset-inline-end: 10px;
+        }
+        .bar {
+          direction: rtl;
+        }
+      `,
+      `
+        @supports not (inset-inline-end: 0) {
+          .foo {
+            --x-inset-inline-end: 10px;
+            left: var(--logical-polyfill-0-rtl, var(--x-inset-inline-start));
+            right: var(--logical-polyfill-0-ltr, var(--x-inset-inline-start));
+          }
+        }
+        .foo {
+          inset-inline-end: 10px;
+        }
+        .bar {
+          direction: rtl;
+        }
+      `,
+      {},
+      `
+        * {
+          --x-inset-inline-end: initial;
+        }
+        [dir="ltr"], html:not([dir="rtl"]) {
+          --is-ltr: 1;
+          --is-rtl: 0;
+          --start: left;
+          --end: right;
+          --inline-unit: 1;
+          --logical-polyfill-0-ltr: 10px;
+          --logical-polyfill-0-rtl: initial;
+        }
+        [dir="rtl"], .bar {
+          --is-ltr: 0;
+          --is-rtl: 1;
+          --start: right;
+          --end: left;
+          --inline-unit: -1;
+          --logical-polyfill-0-ltr: initial;
+          --logical-polyfill-0-rtl: 10px;
+        }
+      `
+    );
+  });
+});
