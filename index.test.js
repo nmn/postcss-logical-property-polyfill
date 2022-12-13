@@ -673,4 +673,69 @@ describe("inset-inline", () => {
       `
     );
   });
+
+  it("Polyfills inset-inline-start and inset-inline-end", async () => {
+    await run(
+      `
+        .foo {
+          inset-inline-end: 10px;
+        }
+        .bar {
+          inset-inline-start: 5px;
+        }
+      `,
+      `
+        @supports not (inset-inline-end: 0) {
+          .foo {
+            --x-inset-inline-end: 10px;
+            left: var(--logical-polyfill-0-rtl, var(--x-inset-inline-start));
+            right: var(--logical-polyfill-0-ltr, var(--x-inset-inline-start));
+          }
+        }
+        .foo {
+          inset-inline-end: 10px;
+        }
+        @supports not (inset-inline-start: 0) {
+          .bar {
+            --x-inset-inline-start: 5px;
+            left: var(--logical-polyfill-1-ltr, var(--x-inset-inline-end));
+            right: var(--logical-polyfill-1-rtl, var(--x-inset-inline-end));
+          }
+        }
+        .bar {
+          inset-inline-start: 5px;
+        }
+      `,
+      {},
+      `
+        * {
+          --x-inset-inline-end: initial;
+          --x-inset-inline-start: initial;
+        }
+        [dir="ltr"], html:not([dir="rtl"]) {
+          --is-ltr: 1;
+          --is-rtl: 0;
+          --start: left;
+          --end: right;
+          --inline-unit: 1;
+          --logical-polyfill-0-ltr: 10px;
+          --logical-polyfill-1-ltr: 5px;
+          --logical-polyfill-0-rtl: initial;
+          --logical-polyfill-1-rtl: initial;
+          
+        }
+        [dir="rtl"] {
+          --is-ltr: 0;
+          --is-rtl: 1;
+          --start: right;
+          --end: left;
+          --inline-unit: -1;
+          --logical-polyfill-0-ltr: initial;
+          --logical-polyfill-1-ltr: initial;
+          --logical-polyfill-0-rtl: 10px;
+          --logical-polyfill-1-rtl: 5px;
+        }
+      `
+    );
+  });
 });
