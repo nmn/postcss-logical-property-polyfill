@@ -138,21 +138,6 @@ describe("margins", () => {
       `
     );
   });
-  it("Polyfills margin-block-start", async () => {
-    await run(
-      `
-      .foo {
-        margin-block-start: 10px;
-      }
-      `,
-      `
-      .foo {
-        margin-top: 10px;
-        margin-block-start: 10px;
-      }
-      `
-    );
-  });
 });
 
 describe("padding", () => {
@@ -609,8 +594,8 @@ describe("inset-inline", () => {
         @supports not (inset-inline-start: 0) {
           .foo {
             --x-inset-inline-start: 10px;
-            left: var(--foo-ltr, var(--x-inset-inline-end));
-            right: var(--foo-rtl, var(--x-inset-inline-end));
+            left: var(--logical-polyfill-0-ltr, var(--x-inset-inline-end));
+            right: var(--logical-polyfill-0-rtl, var(--x-inset-inline-end));
           }
         }
         .foo {
@@ -628,8 +613,8 @@ describe("inset-inline", () => {
           --start: left;
           --end: right;
           --inline-unit: 1;
-          --foo-ltr: 10px;
-          --foo-rtl: initial;
+          --logical-polyfill-0-ltr: 10px;
+          --logical-polyfill-0-rtl: initial;
         }
         [dir="rtl"] {
           --is-ltr: 0;
@@ -637,8 +622,8 @@ describe("inset-inline", () => {
           --start: right;
           --end: left;
           --inline-unit: -1;
-          --foo-ltr: initial;
-          --foo-rtl: 10px;
+          --logical-polyfill-0-ltr: initial;
+          --logical-polyfill-0-rtl: 10px;
         }
       `
     );
@@ -654,8 +639,8 @@ describe("inset-inline", () => {
         @supports not (inset-inline-end: 0) {
           .foo {
             --x-inset-inline-end: 10px;
-            left: var(--foo-rtl, var(--x-inset-inline-start));
-            right: var(--foo-ltr, var(--x-inset-inline-start));
+            left: var(--logical-polyfill-0-rtl, var(--x-inset-inline-start));
+            right: var(--logical-polyfill-0-ltr, var(--x-inset-inline-start));
           }
         }
         .foo {
@@ -673,8 +658,8 @@ describe("inset-inline", () => {
           --start: left;
           --end: right;
           --inline-unit: 1;
-          --foo-ltr: 10px;
-          --foo-rtl: initial;
+          --logical-polyfill-0-ltr: 10px;
+          --logical-polyfill-0-rtl: initial;
         }
         [dir="rtl"] {
           --is-ltr: 0;
@@ -682,8 +667,8 @@ describe("inset-inline", () => {
           --start: right;
           --end: left;
           --inline-unit: -1;
-          --foo-ltr: initial;
-          --foo-rtl: 10px;
+          --logical-polyfill-0-ltr: initial;
+          --logical-polyfill-0-rtl: 10px;
         }
       `
     );

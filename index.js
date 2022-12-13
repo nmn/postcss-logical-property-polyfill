@@ -4,23 +4,11 @@ const makeDecl = postcss.decl;
 const makeRule = postcss.rule;
 const atRule = postcss.atRule;
 
-function getClassName(selectors) {
-  if (
-    selectors.length > 1 ||
-    !selectors[0].startsWith(".") ||
-    selectors[0].includes(" + ") ||
-    selectors[0].includes(" > ") ||
-    selectors[0].includes(" ~ ")
-  ) {
-    return null;
-  }
-  const selector = selectors[0];
-  const className = selector.slice(1).match(/^[a-zA-Z0-9-]+/)[0];
-  return className;
-}
-
 /** @type {import('postcss').PluginCreator} */
 module.exports = () => {
+  let count = 0;
+  const uuid = () => `logical-polyfill-${count++}`;
+
   const rtlSelectors = ['[dir="rtl"]'];
   const ltrSelectors = ['[dir="ltr"]', 'html:not([dir="rtl"])'];
   /** @type {Array<{prop: string, value: string}>} */
@@ -405,13 +393,9 @@ module.exports = () => {
         const value = decl.value;
         /** @type {require("postcss").Rule} */
         const rule = decl.parent;
-        const selectors = rule.selectors;
-        const className = getClassName(selectors);
-        if (className == null) {
-          return;
-        }
+        const varName = uuid();
 
-        variablesForProperties.push({ prop: `--${className}`, value });
+        variablesForProperties.push({ prop: `--${varName}`, value });
         resetVars.push("--x-inset-inline-start");
 
         rule.replaceWith(
@@ -425,11 +409,11 @@ module.exports = () => {
                   makeDecl({ prop: "--x-inset-inline-start", value }),
                   makeDecl({
                     prop: "left",
-                    value: `var(--${className}-ltr, var(--x-inset-inline-end))`,
+                    value: `var(--${varName}-ltr, var(--x-inset-inline-end))`,
                   }),
                   makeDecl({
                     prop: "right",
-                    value: `var(--${className}-rtl, var(--x-inset-inline-end))`,
+                    value: `var(--${varName}-rtl, var(--x-inset-inline-end))`,
                   }),
                 ],
               }),
@@ -442,13 +426,9 @@ module.exports = () => {
         const value = decl.value;
         /** @type {require("postcss").Rule} */
         const rule = decl.parent;
-        const selectors = rule.selectors;
-        const className = getClassName(selectors);
-        if (className == null) {
-          return;
-        }
+        const varName = uuid();
 
-        variablesForProperties.push({ prop: `--${className}`, value });
+        variablesForProperties.push({ prop: `--${varName}`, value });
         resetVars.push("--x-inset-inline-end");
 
         rule.replaceWith(
@@ -462,11 +442,11 @@ module.exports = () => {
                   makeDecl({ prop: "--x-inset-inline-end", value }),
                   makeDecl({
                     prop: "left",
-                    value: `var(--${className}-rtl, var(--x-inset-inline-start))`,
+                    value: `var(--${varName}-rtl, var(--x-inset-inline-start))`,
                   }),
                   makeDecl({
                     prop: "right",
-                    value: `var(--${className}-ltr, var(--x-inset-inline-start))`,
+                    value: `var(--${varName}-ltr, var(--x-inset-inline-start))`,
                   }),
                 ],
               }),
@@ -479,13 +459,9 @@ module.exports = () => {
         const value = decl.value;
         /** @type {require("postcss").Rule} */
         const rule = decl.parent;
-        const selectors = rule.selectors;
-        const className = getClassName(selectors);
-        if (className == null) {
-          return;
-        }
+        const varName = uuid();
 
-        variablesForProperties.push({ prop: `--${className}`, value });
+        variablesForProperties.push({ prop: `--${varName}`, value });
         resetVars.push("--x-border-start-start-radius");
 
         rule.replaceWith(
@@ -499,11 +475,11 @@ module.exports = () => {
                   makeDecl({ prop: "--x-border-start-start-radius", value }),
                   makeDecl({
                     prop: "border-top-left-radius",
-                    value: `var(--${className}-ltr, var(--x-border-start-end-radius))`,
+                    value: `var(--${varName}-ltr, var(--x-border-start-end-radius))`,
                   }),
                   makeDecl({
                     prop: "border-top-right-radius",
-                    value: `var(--${className}-rtl, var(--x-border-start-end-radius))`,
+                    value: `var(--${varName}-rtl, var(--x-border-start-end-radius))`,
                   }),
                 ],
               }),
@@ -516,13 +492,9 @@ module.exports = () => {
         const value = decl.value;
         /** @type {require("postcss").Rule} */
         const rule = decl.parent;
-        const selectors = rule.selectors;
-        const className = getClassName(selectors);
-        if (className == null) {
-          return;
-        }
+        const varName = uuid();
 
-        variablesForProperties.push({ prop: `--${className}`, value });
+        variablesForProperties.push({ prop: `--${varName}`, value });
         resetVars.push("--x-border-start-end-radius");
 
         rule.replaceWith(
@@ -536,11 +508,11 @@ module.exports = () => {
                   makeDecl({ prop: "--x-border-start-end-radius", value }),
                   makeDecl({
                     prop: "border-top-left-radius",
-                    value: `var(--${className}-rtl, var(--x-border-start-start-radius))`,
+                    value: `var(--${varName}-rtl, var(--x-border-start-start-radius))`,
                   }),
                   makeDecl({
                     prop: "border-top-right-radius",
-                    value: `var(--${className}-ltr, var(--x-border-start-start-radius))`,
+                    value: `var(--${varName}-ltr, var(--x-border-start-start-radius))`,
                   }),
                 ],
               }),
@@ -553,13 +525,9 @@ module.exports = () => {
         const value = decl.value;
         /** @type {require("postcss").Rule} */
         const rule = decl.parent;
-        const selectors = rule.selectors;
-        const className = getClassName(selectors);
-        if (className == null) {
-          return;
-        }
+        const varName = uuid();
 
-        variablesForProperties.push({ prop: `--${className}`, value });
+        variablesForProperties.push({ prop: `--${varName}`, value });
         resetVars.push("--x-border-end-start-radius");
 
         rule.replaceWith(
@@ -573,11 +541,11 @@ module.exports = () => {
                   makeDecl({ prop: "--x-border-end-start-radius", value }),
                   makeDecl({
                     prop: "border-bottom-left-radius",
-                    value: `var(--${className}-ltr, var(--x-border-end-end-radius))`,
+                    value: `var(--${varName}-ltr, var(--x-border-end-end-radius))`,
                   }),
                   makeDecl({
                     prop: "border-bottom-right-radius",
-                    value: `var(--${className}-rtl, var(--x-border-end-end-radius))`,
+                    value: `var(--${varName}-rtl, var(--x-border-end-end-radius))`,
                   }),
                 ],
               }),
@@ -590,13 +558,9 @@ module.exports = () => {
         const value = decl.value;
         /** @type {require("postcss").Rule} */
         const rule = decl.parent;
-        const selectors = rule.selectors;
-        const className = getClassName(selectors);
-        if (className == null) {
-          return;
-        }
+        const varName = uuid();
 
-        variablesForProperties.push({ prop: `--${className}`, value });
+        variablesForProperties.push({ prop: `--${varName}`, value });
         resetVars.push("--x-border-end-end-radius");
 
         rule.replaceWith(
@@ -610,11 +574,11 @@ module.exports = () => {
                   makeDecl({ prop: "--x-border-end-end-radius", value }),
                   makeDecl({
                     prop: "border-bottom-left-radius",
-                    value: `var(--${className}-rtl, var(--x-border-end-start-radius))`,
+                    value: `var(--${varName}-rtl, var(--x-border-end-start-radius))`,
                   }),
                   makeDecl({
                     prop: "border-bottom-right-radius",
-                    value: `var(--${className}-ltr, var(--x-border-end-start-radius))`,
+                    value: `var(--${varName}-ltr, var(--x-border-end-start-radius))`,
                   }),
                 ],
               }),
