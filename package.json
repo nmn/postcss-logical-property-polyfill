@@ -6,6 +6,7 @@
     "postcss",
     "css",
     "postcss-plugin",
+    "postcss-logical-property-polyfill",
     "postcss-logical-property-fallbacks"
   ],
   "scripts": {
@@ -13,7 +14,7 @@
   },
   "author": "Naman Goel <naman34@gmail.com>",
   "license": "MIT",
-  "repository": "nmn/postcss-logical-property-fallbacks",
+  "repository": "nmn/postcss-logical-property-polyfill",
   "engines": {
     "node": ">=12.0.0"
   },
