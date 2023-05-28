@@ -1,4 +1,4 @@
-# postcss-logical-property-fallbacks
+# postcss-logical-property-polyfill
 
 [PostCSS] plugin that will polyfill inset-inline-(start|end) and border-(start|end)-(start|end)-radius in older browsers that don't support them. The polyfill works by leveraging CSS variables, and works for sub-trees and not just globally..
 
@@ -146,7 +146,7 @@ html:not([dir="rtl"]) {
 **Step 1:** Install plugin:
 
 ```sh
-npm install --save-dev postcss postcss-logical-property-fallbacks
+npm install --save-dev postcss postcss-logical-property-polyfill
 ```
 
 **Step 2:** Check you project for existed PostCSS config: `postcss.config.js`
@@ -161,7 +161,7 @@ and set this plugin in settings.
 ```diff
 module.exports = {
   plugins: [
-+   require('postcss-logical-property-fallbacks'),
++   require('postcss-logical-property-polyfill'),
     require('autoprefixer')
   ]
 }
