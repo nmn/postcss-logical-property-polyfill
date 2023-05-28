@@ -18,7 +18,7 @@ Output:
 
 ```css
 .foo {
-  -webkot-margin-start: 10px;
+  -webkit-margin-start: 10px;
   margin-inline-start: 10px;
 }
 ```
